@@ -42,6 +42,7 @@ private:
 private:
 	void BindEvents();
 	void AddPage(wxCommandEvent& event);
+	void AddCodePage(wxCommandEvent& event);
 
 public:
 	MainFrame(const wxString& title = "PurePad", const wxSize& size = wxSize(500, 300),
