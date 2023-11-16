@@ -20,6 +20,8 @@
 #include <wx/stattext.h>
 #include <wx/frame.h>
 
+#include <vector>
+
 class MainFrame : public wxFrame
 {
 private:
@@ -34,7 +36,17 @@ private:
 	wxStaticText* tabFillerLabel;
 	wxTextCtrl* fontSizeTextCtrl;
 
+private:
+	unsigned int pageCounter;
+
+private:
+	void BindEvents();
+	void AddPage(wxCommandEvent& event);
+	void AddCodePage(wxCommandEvent& event);
+
 public:
 	MainFrame(const wxString& title = "PurePad", const wxSize& size = wxSize(500, 300),
 		long style = wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP | wxBORDER_NONE);
+	~MainFrame();
+
 };
