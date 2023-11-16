@@ -1,6 +1,5 @@
 #include "MainFrame.h"
-#include "Page.h"
-#include "CodePage.h"
+#include "ThemeColors.h"
 
 MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	:
@@ -155,14 +154,12 @@ void MainFrame::AddCodePage(wxCommandEvent& event)
 	codeStyledText->SetMarginType(0, wxSTC_MARGIN_NUMBER);
 
 
-	// ---- Enable code folding
 	codeStyledText->SetMarginType(wxSTC_MARGIN_NUMBER, wxSTC_MARGIN_SYMBOL);
 	codeStyledText->SetMarginWidth(wxSTC_MARGIN_NUMBER, 15);
 	codeStyledText->SetMarginMask(wxSTC_MARGIN_NUMBER, wxSTC_MASK_FOLDERS);
 	codeStyledText->StyleSetBackground(wxSTC_MARGIN_NUMBER, wxColor(200, 200, 200));
 	codeStyledText->SetMarginSensitive(wxSTC_MARGIN_NUMBER, true);
 
-	// Properties found from http://www.scintilla.org/SciTEDoc.html
 	codeStyledText->SetProperty(wxT("fold"), wxT("1"));
 	codeStyledText->SetProperty(wxT("fold.comment"), wxT("1"));
 	codeStyledText->SetProperty(wxT("fold.compact"), wxT("1"));
@@ -200,25 +197,24 @@ void MainFrame::AddCodePage(wxCommandEvent& event)
 	codeStyledText->SetWrapMode(wxSTC_WRAP_WORD); // other choice is wxSCI_WRAP_NONE
 
 
-	codeStyledText->StyleSetForeground(wxSTC_C_STRING, wxColour(150, 0, 0));
-	codeStyledText->StyleSetForeground(wxSTC_C_PREPROCESSOR, wxColour(165, 105, 0));
-	codeStyledText->StyleSetForeground(wxSTC_C_IDENTIFIER, wxColour(40, 0, 60));
-	codeStyledText->StyleSetForeground(wxSTC_C_NUMBER, wxColour(0, 150, 0));
-	codeStyledText->StyleSetForeground(wxSTC_C_CHARACTER, wxColour(150, 0, 0));
-	codeStyledText->StyleSetForeground(wxSTC_C_WORD, wxColour(0, 0, 150));
-	codeStyledText->StyleSetForeground(wxSTC_C_WORD2, wxColour(0, 150, 0));
-	codeStyledText->StyleSetForeground(wxSTC_C_COMMENT, wxColour(150, 150, 150));
-	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTLINE, wxColour(150, 150, 150));
-	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOC, wxColour(150, 150, 150));
-	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOCKEYWORD, wxColour(0, 0, 200));
-	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOCKEYWORDERROR, wxColour(0, 0, 200));
+	codeStyledText->StyleSetForeground(wxSTC_C_STRING, Colors::string);
+	codeStyledText->StyleSetForeground(wxSTC_C_PREPROCESSOR, Colors::preprocessor);
+	codeStyledText->StyleSetForeground(wxSTC_C_IDENTIFIER, Colors::identifier);
+	codeStyledText->StyleSetForeground(wxSTC_C_NUMBER, Colors::number);
+	codeStyledText->StyleSetForeground(wxSTC_C_CHARACTER, Colors::character);
+	codeStyledText->StyleSetForeground(wxSTC_C_WORD, Colors::word);
+	codeStyledText->StyleSetForeground(wxSTC_C_WORD2, Colors::word2);
+	codeStyledText->StyleSetForeground(wxSTC_C_COMMENT, Colors::comment);
+	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTLINE, Colors::commentLine);
+	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOC, Colors::commentDoc);
+	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOCKEYWORD, Colors::commentDocKeyword);
+	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOCKEYWORDERROR, Colors::commentDocKeywordError);
 	codeStyledText->StyleSetBold(wxSTC_C_WORD, true);
 	codeStyledText->StyleSetBold(wxSTC_C_WORD2, true);
 	codeStyledText->StyleSetBold(wxSTC_C_COMMENTDOCKEYWORD, true);
 
-	// a sample list of keywords, I haven't included them all to keep it short...
 	codeStyledText->SetKeyWords(0, wxT("return for while break continue"));
-	codeStyledText->SetKeyWords(1, wxT("const int float void char double"));
+	codeStyledText->SetKeyWords(1, wxT("const int float void char double unsigned"));
 
 	codePageTextSizer->Add(codeStyledText, 1, wxEXPAND, 5);
 
