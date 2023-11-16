@@ -25,9 +25,7 @@ class MainFrame : public wxFrame
 private:
 	wxNotebook* genNotebook;
 	wxPanel* pagePanel;
-	wxTextCtrl* pageTextCtrl;
 	wxPanel* codePagePanel;
-	wxStyledTextCtrl* codeText;
 	wxBitmapButton* addBtn;
 	wxBitmapButton* delBtn;
 	wxBitmapButton* codeBtn;
