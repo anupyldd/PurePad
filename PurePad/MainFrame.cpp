@@ -1,8 +1,11 @@
 #include "MainFrame.h"
+#include "Page.h"
+#include "CodePage.h"
 
 MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	:
-	wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, size, style)
+	wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, size, style),
+	pageCounter(0)
 {
 	wxInitAllImageHandlers();
 	wxString pathToIcons = wxGetCwd() + "\\Icons\\";
@@ -100,6 +103,30 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 
 	this->SetSizer(genSizer);
 	this->Layout();
-
 	this->Centre(wxBOTH);
+
+	BindEvents();
+}
+
+MainFrame::~MainFrame()
+{
+}
+
+void MainFrame::BindEvents()
+{
+	addBtn->Bind(wxEVT_BUTTON, &MainFrame::AddPage, this);
+}
+
+void MainFrame::AddPage(wxCommandEvent& event)
+{
+	pageCounter++;
+
+	wxPanel* newPage = new wxPanel(genNotebook);
+	wxBoxSizer* pageTextSizer = new wxBoxSizer(wxVERTICAL);
+	wxTextCtrl* pageTextCtrl = new wxTextCtrl(newPage, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+	pageTextSizer->Add(pageTextCtrl, 1, wxEXPAND, 5);
+	newPage->SetSizer(pageTextSizer);
+	newPage->Layout();
+
+	genNotebook->AddPage(newPage, wxString("new page"), true);
 }
