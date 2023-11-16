@@ -1,6 +1,4 @@
 #include "MainFrame.h"
-#include "Page.h"
-#include "CodePage.h"
 
 MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	:
