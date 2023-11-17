@@ -20,7 +20,7 @@
 #include <wx/stattext.h>
 #include <wx/frame.h>
 
-#include <vector>
+#include "DeletePageDialog.h"
 
 class MainFrame : public wxFrame
 {
@@ -36,6 +36,8 @@ private:
 	wxBitmapButton* editNameBtn;
 	wxStaticText* tabFillerLabel;
 	wxTextCtrl* fontSizeTextCtrl;
+
+	DeletePageDialog* deletePageDialog;
 
 private:
 	unsigned int pageCounter;
