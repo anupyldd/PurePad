@@ -365,6 +365,26 @@ void MainFrame::DeletePage(wxCommandEvent& event)
 	
 	if (deletePageDialog->ShowModal() == wxID_OK)
 	{
+		std::filesystem::path pathToCwd = std::filesystem::current_path();
+		std::filesystem::path pathToPages = pathToCwd / "Pages";
+		std::filesystem::path pathToDelFile;
+
+		for (const auto& dirEntry : std::filesystem::recursive_directory_iterator(pathToPages))
+		{
+			std::filesystem::path pathToFile = dirEntry.path();
+			std::string fileName = pathToFile.filename().string();
+
+			if (fileName == genNotebook->GetPageText(genNotebook->GetSelection()).ToStdString() ||
+				fileName == genNotebook->GetPageText(genNotebook->GetSelection()).ToStdString() + "_codePage")
+			{
+				pathToDelFile = pathToFile;
+			}
+		}
+		
+		if (!pathToDelFile.empty())
+		{
+			std::filesystem::remove(pathToDelFile);
+		}
 		genNotebook->DeletePage(genNotebook->GetSelection());
 	}
 	else
@@ -417,6 +437,7 @@ void MainFrame::SavePagesToTextFiles(wxCloseEvent& event)
 
 	if (pageCount == 0)
 	{
+		Destroy();
 		return;
 	}
 
