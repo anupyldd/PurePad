@@ -14,7 +14,7 @@ DeletePageDialog::DeletePageDialog(wxWindow* parent, wxWindowID id, const wxStri
 	wxBoxSizer* delDialogBtnSizer;
 	delDialogBtnSizer = new wxBoxSizer(wxHORIZONTAL);
 
-	delOkBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE);
+	delOkBtn = new wxBitmapButton(this, wxID_OK, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE);
 
 	delOkBtn->SetBitmap(wxBitmap(wxT("Icons/okBtn.png"), wxBITMAP_TYPE_ANY));
 	delOkBtn->SetBitmapPressed(wxBitmap(wxT("Icons/okBtnPressed.png"), wxBITMAP_TYPE_ANY));
@@ -22,7 +22,7 @@ DeletePageDialog::DeletePageDialog(wxWindow* parent, wxWindowID id, const wxStri
 
 	delDialogBtnSizer->Add(delOkBtn, 1, wxALL, 5);
 
-	delCancelBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE);
+	delCancelBtn = new wxBitmapButton(this, wxID_CANCEL, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE);
 
 	delCancelBtn->SetBitmap(wxBitmap(wxT("Icons/cancelBtn.png"), wxBITMAP_TYPE_ANY));
 	delCancelBtn->SetBitmapPressed(wxBitmap(wxT("Icons/cancelBtnPressed.png"), wxBITMAP_TYPE_ANY));
@@ -44,3 +44,4 @@ DeletePageDialog::DeletePageDialog(wxWindow* parent, wxWindowID id, const wxStri
 DeletePageDialog::~DeletePageDialog()
 {
 }
+

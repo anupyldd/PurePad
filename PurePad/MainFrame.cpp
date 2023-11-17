@@ -233,8 +233,20 @@ void MainFrame::AddCodePage(wxCommandEvent& event)
 
 void MainFrame::DeletePage(wxCommandEvent& event)
 {
-	if (genNotebook->GetSelection() != wxNOT_FOUND) 
+	if (genNotebook->GetSelection() == wxNOT_FOUND)
+	{
+		return;
+	}
+
+	deletePageDialog = new DeletePageDialog(this);
+	
+	if (deletePageDialog->ShowModal() == wxID_OK)
 	{
 		genNotebook->DeletePage(genNotebook->GetSelection());
 	}
+	else
+	{
+		return;
+	}
+	
 }
