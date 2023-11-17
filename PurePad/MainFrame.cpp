@@ -1,6 +1,11 @@
 #include "MainFrame.h"
 #include "ThemeColors.h"
 
+#include <filesystem>
+#include <iostream>
+#include <fstream>
+#include <string>
+
 MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	:
 	wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, size, style),
@@ -136,6 +141,8 @@ void MainFrame::BindEvents()
 	delBtn->Bind(wxEVT_BUTTON, &MainFrame::DeletePage, this);
 	editNameBtn->Bind(wxEVT_BUTTON, &MainFrame::RenamePage, this);
 	//wrapBtn->Bind(wxEVT_BUTTON, &MainFrame::ToggleWordWrap, this);
+	//this->Bind(wxEVT_CLOSE_WINDOW, &MainFrame::SavePagesToTextFiles, this);
+	Bind(wxEVT_CLOSE_WINDOW, &MainFrame::SavePagesToTextFiles, this);
 }
 
 void MainFrame::AddPage(wxCommandEvent& event)
@@ -301,4 +308,46 @@ void MainFrame::ToggleWordWrap(wxCommandEvent& event)
 	}
 
 
+}
+
+void MainFrame::SavePagesToTextFiles(wxCloseEvent& event)
+{
+	
+	size_t pageCount = genNotebook->GetPageCount();
+
+	if (pageCount == 0)
+	{
+		return;
+	}
+
+	std::filesystem::path pathToCwd = std::filesystem::current_path();
+	std::filesystem::path pathToPages = pathToCwd / "Pages";
+	std::filesystem::remove_all(pathToPages);
+	std::filesystem::create_directory(pathToPages);
+	
+	for (size_t i = 0; i < pageCount; i++)
+	{
+		wxWindow* pagePanel = genNotebook->GetPage(i);
+		wxWindowList pageChildren = pagePanel->GetChildren();
+		wxTextCtrl* pageTextCtrl = dynamic_cast<wxTextCtrl*>(pageChildren[0]);
+
+		if (pageTextCtrl) 
+		{
+			std::string textValue = pageTextCtrl->GetValue().ToStdString();
+			std::string pageName = genNotebook->GetPageText(i).ToStdString();
+			pageName += ".txt";
+			std::string pathToFile = pathToPages.string() + "\\" + pageName;
+			std::ofstream pageFile(pathToFile);
+
+			pageFile << textValue;
+
+			pageFile.close();
+		}
+		else
+		{
+			continue;
+		}
+	}
+	
+	Destroy();
 }
