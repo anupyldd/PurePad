@@ -187,37 +187,37 @@ void MainFrame::AddCodePage(wxCommandEvent& event)
 	codeStyledText->SetProperty(wxT("fold.comment"), wxT("1"));
 	codeStyledText->SetProperty(wxT("fold.compact"), wxT("1"));
 
-	wxColor grey(100, 100, 100);
 	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDER, wxSTC_MARK_ARROW);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDER, grey);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDER, grey);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDER, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDER, Colors::lightGray);
 
 	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDEROPEN, wxSTC_MARK_ARROWDOWN);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEROPEN, grey);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDEROPEN, grey);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEROPEN, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDEROPEN, Colors::lightGray);
 
 	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDERSUB, wxSTC_MARK_EMPTY);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERSUB, grey);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERSUB, grey);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERSUB, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERSUB, Colors::lightGray);
 
 	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDEREND, wxSTC_MARK_ARROW);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEREND, grey);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEREND, Colors::lightGray);
 	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDEREND, _T("WHITE"));
 
 	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_ARROWDOWN);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEROPENMID, grey);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEROPENMID, Colors::lightGray);
 	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDEROPENMID, _T("WHITE"));
 
 	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERMIDTAIL, grey);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERMIDTAIL, grey);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERMIDTAIL, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERMIDTAIL, Colors::lightGray);
 
 	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDERTAIL, wxSTC_MARK_EMPTY);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERTAIL, grey);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERTAIL, grey);
-	// ---- End of code folding part
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERTAIL, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERTAIL, Colors::lightGray);
+	
 
-	codeStyledText->SetWrapMode(wxSTC_WRAP_WORD); // other choice is wxSCI_WRAP_NONE
+	//codeStyledText->SetWrapMode(wxSTC_WRAP_WORD); 
+	codeStyledText->SetWrapMode(wxSTC_WRAP_NONE);
 
 
 	codeStyledText->StyleSetForeground(wxSTC_C_STRING, Colors::string);

@@ -11,7 +11,7 @@ namespace Colors
 	// code highlighting 
 	static wxColor string(240, 140, 65);
 	static wxColor preprocessor(100, 100, 100);
-	static wxColor identifier(65, 165, 240);
+	static wxColor identifier(118, 66, 214);
 	static wxColor number(77, 240, 65);
 	static wxColor character(100, 100, 100);
 	static wxColor word(48, 127, 187);
