@@ -8,8 +8,7 @@
 
 MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	:
-	wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, size, style),
-	pageCounter(0)
+	wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, size, style)
 {
 	wxInitAllImageHandlers();
 	wxString pathToIcons = wxGetCwd() + "\\Icons\\";
@@ -157,6 +156,20 @@ void MainFrame::AddPage(wxCommandEvent& event)
 	newPage->Layout();
 
 	genNotebook->AddPage(newPage, wxString("new"), true);
+}
+
+void MainFrame::CreatePage(wxString& inPageName)
+{
+	wxPanel* newPage = new wxPanel(genNotebook);
+	wxBoxSizer* pageTextSizer = new wxBoxSizer(wxVERTICAL);
+	wxTextCtrl* pageTextCtrl = new wxTextCtrl(newPage, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+	wxFont font = wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Consolas"));
+	pageTextCtrl->SetFont(font);
+	pageTextSizer->Add(pageTextCtrl, 1, wxEXPAND, 5);
+	newPage->SetSizer(pageTextSizer);
+	newPage->Layout();
+
+	genNotebook->AddPage(newPage, inPageName, true);
 }
 
 void MainFrame::AddCodePage(wxCommandEvent& event)
@@ -485,6 +498,7 @@ void MainFrame::LoadPagesFromTextFiles()
 				while (std::getline(fileText, textFromFile))
 				{
 					textForPage += textFromFile;
+					textForPage += '\n';
 				}
 				wxString wxTextForPage(textForPage);
 
@@ -498,6 +512,16 @@ void MainFrame::LoadPagesFromTextFiles()
 					wxWindow* pagePanel = genNotebook->GetPage(genNotebook->GetPageCount() - 1);
 					wxWindowList pageChildren = pagePanel->GetChildren();
 					wxStyledTextCtrl* pageTextCtrl = dynamic_cast<wxStyledTextCtrl*>(pageChildren[0]);
+					pageTextCtrl->SetValue(wxTextForPage);
+				}
+				else
+				{
+					wxString wxPageName(pageName);
+					CreatePage(wxPageName);
+
+					wxWindow* pagePanel = genNotebook->GetPage(genNotebook->GetPageCount() - 1);
+					wxWindowList pageChildren = pagePanel->GetChildren();
+					wxTextCtrl* pageTextCtrl = dynamic_cast<wxTextCtrl*>(pageChildren[0]);
 					pageTextCtrl->SetValue(wxTextForPage);
 				}
 			}
