@@ -5,7 +5,8 @@
 namespace Colors
 {
 	// theme colors
-	
+	static wxColor darkGray(70, 70, 70);
+	static wxColor lightGray(180, 180, 180);
 
 	// code highlighting 
 	static wxColor string(240, 140, 65);
