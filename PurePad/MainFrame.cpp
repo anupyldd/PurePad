@@ -1,5 +1,6 @@
 #include "MainFrame.h"
 #include "ThemeColors.h"
+#include "SyntaxHighlighting.h"
 
 #include <filesystem>
 #include <iostream>
@@ -52,6 +53,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 
 	buttonsSizer->Add(codeBtn, 0, wxLEFT, this->FromDIP(5));
 
+
 	delBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE | wxBORDER_NONE);
 
 	delBtn->SetBitmap(wxBitmap(pathToIcons + "delBtn.png", wxBITMAP_TYPE_ANY));
@@ -91,11 +93,12 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 
 	buttonsSizer->Add(editNameBtn, 0, wxLEFT, this->FromDIP(5));
 
-	/*
+	
 	tabFillerLabel = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	tabFillerLabel->Wrap(-1);
 	buttonsSizer->Add(tabFillerLabel, 12, 0, 5);
 
+	/*
 	fontSizeTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(32, 16), 0);
 #ifdef __WXGTK__
 	if (!fontSizeTextCtrl->HasFlag(wxTE_MULTILINE))
@@ -109,6 +112,15 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 
 	buttonsSizer->Add(fontSizeTextCtrl, 0, wxALIGN_CENTER | wxRIGHT, 5);
 	*/
+
+	codeOptBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE | wxBORDER_NONE);
+
+	codeOptBtn->SetBitmap(wxBitmap(pathToIcons + "arrowBtn.png", wxBITMAP_TYPE_ANY));
+	codeOptBtn->SetBitmapPressed(wxBitmap(pathToIcons + "arrowBtnPressed.png", wxBITMAP_TYPE_ANY));
+	codeOptBtn->SetToolTip(wxT("Code options"));
+	codeOptBtn->SetBackgroundColour(Colors::darkGray);
+
+	buttonsSizer->Add(codeOptBtn, 0, wxRIGHT, this->FromDIP(5));
 
 
 	menuSizer->Add(buttonsSizer, 1, wxLEFT, 0);
@@ -140,6 +152,8 @@ void MainFrame::BindEvents()
 	codeBtn->Bind(wxEVT_BUTTON, &MainFrame::AddCodePage, this);
 	delBtn->Bind(wxEVT_BUTTON, &MainFrame::DeletePage, this);
 	editNameBtn->Bind(wxEVT_BUTTON, &MainFrame::RenamePage, this);
+	codeOptBtn->Bind(wxEVT_BUTTON, &MainFrame::UpdateCodeOptions, this);
+
 	Bind(wxEVT_CLOSE_WINDOW, &MainFrame::SavePagesToTextFiles, this);
 }
 
@@ -252,8 +266,8 @@ void MainFrame::AddCodePage(wxCommandEvent& event)
 	codeStyledText->StyleSetBold(wxSTC_C_WORD2, true);
 	codeStyledText->StyleSetBold(wxSTC_C_COMMENTDOCKEYWORD, true);
 
-	codeStyledText->SetKeyWords(0, wxT("alignas alignof and and_eq asm atomic_cancel atomic_commit atomic_noexcept auto bitand bitor break case catch class compl concept const consteval constexpr constinit const_cast continue co_await co_return co_yield decltype default delete do dynamic_cast else enum explicit export extern false for friend goto if inline mutable namespace new noexcept not not_eq nullptr operator or or_eq private protected public reflexpr register reinterpret_cast requires return sizeof static static_assert static_cast struct switch synchronized template this thread_local throw true try typedef typeid typename union using virtual volatile while xor xor_eq"));
-	codeStyledText->SetKeyWords(1, wxT("const signed unsigned int float void char double bool char8_t char16_t char32_t wchar_t"));
+	codeStyledText->SetKeyWords(0, Keywords::cpp);
+	codeStyledText->SetKeyWords(1, Keywords::cpp2);
 
 	codePageTextSizer->Add(codeStyledText, 1, wxEXPAND, 5);
 	
@@ -343,8 +357,8 @@ void MainFrame::CreateCodePage(wxString& inPageName)
 	codeStyledText->StyleSetBold(wxSTC_C_WORD2, true);
 	codeStyledText->StyleSetBold(wxSTC_C_COMMENTDOCKEYWORD, true);
 
-	codeStyledText->SetKeyWords(0, wxT("alignas alignof and and_eq asm atomic_cancel atomic_commit atomic_noexcept auto bitand bitor break case catch class compl concept const consteval constexpr constinit const_cast continue co_await co_return co_yield decltype default delete do dynamic_cast else enum explicit export extern false for friend goto if inline mutable namespace new noexcept not not_eq nullptr operator or or_eq private protected public reflexpr register reinterpret_cast requires return sizeof static static_assert static_cast struct switch synchronized template this thread_local throw true try typedef typeid typename union using virtual volatile while xor xor_eq"));
-	codeStyledText->SetKeyWords(1, wxT("const signed unsigned int float void char double bool char8_t char16_t char32_t wchar_t"));
+	codeStyledText->SetKeyWords(0, Keywords::cpp);
+	codeStyledText->SetKeyWords(1, Keywords::cpp2);
 
 	codePageTextSizer->Add(codeStyledText, 1, wxEXPAND, 5);
 
@@ -428,6 +442,23 @@ void MainFrame::ToggleWordWrap(wxCommandEvent& event)
 	}
 
 
+}
+
+void MainFrame::UpdateCodeOptions(wxCommandEvent& event)
+{
+	if (genNotebook->GetSelection() == wxNOT_FOUND)
+	{
+		return;
+	}
+
+	wxWindow* pagePanel = genNotebook->GetPage(genNotebook->GetSelection());
+	wxWindowList pageChildren = pagePanel->GetChildren();
+	wxStyledTextCtrl* pageTextCtrl = dynamic_cast<wxStyledTextCtrl*>(pageChildren[0]);
+	if (pageTextCtrl) 
+	{
+		codeOptionsDialog = new CodeOptionsDialog(genNotebook);
+		codeOptionsDialog->ShowModal();
+	}
 }
 
 void MainFrame::SavePagesToTextFiles(wxCloseEvent& event)

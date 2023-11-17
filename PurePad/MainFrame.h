@@ -22,6 +22,7 @@
 
 #include "DeletePageDialog.h"
 #include "RenamePageDialog.h"
+#include "CodeOptionsDialog.h"
 
 class MainFrame : public wxFrame
 {
@@ -32,6 +33,7 @@ private:
 	wxBitmapButton* addBtn;
 	wxBitmapButton* delBtn;
 	wxBitmapButton* codeBtn;
+	wxBitmapButton* codeOptBtn;
 	wxBitmapButton* wrapBtn;
 	wxBitmapButton* onTopBtn;
 	wxBitmapButton* editNameBtn;
@@ -40,6 +42,7 @@ private:
 
 	DeletePageDialog* deletePageDialog;
 	RenamePageDialog* renamePageDialog;
+	CodeOptionsDialog* codeOptionsDialog;
 
 private:
 	void BindEvents();
@@ -52,6 +55,8 @@ private:
 	void DeletePage(wxCommandEvent& event);
 	void RenamePage(wxCommandEvent& event);
 	void ToggleWordWrap(wxCommandEvent& event);
+	void UpdateCodeOptions(wxCommandEvent& event);
+
 	void SavePagesToTextFiles(wxCloseEvent& event);
 	void LoadPagesFromTextFiles();
 
