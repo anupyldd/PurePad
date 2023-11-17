@@ -21,7 +21,8 @@ CodeOptionsDialog::CodeOptionsDialog(wxWindow* parent, wxWindowID id, const wxSt
 	this->Layout();
 	codeOptionsSizer->Fit(this);
 
-	this->Centre(wxBOTH);
+	this->SetPosition(wxGetMousePosition() - this->GetSize());
+	//this->Centre(wxBOTH);
 }
 
 CodeOptionsDialog::~CodeOptionsDialog()
