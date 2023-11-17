@@ -11,7 +11,8 @@ RenamePageDialog::RenamePageDialog(wxWindow* parent, wxWindowID id, const wxStri
 	pageNameLabel->Wrap(-1);
 	pageNameSizer->Add(pageNameLabel, 0, wxALL, 5);
 
-	pageNameTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+	pageNameTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	pageNameTextCtrl->Bind(wxEVT_TEXT_ENTER, &RenamePageDialog::SetNameOnEnter, this);
 	pageNameSizer->Add(pageNameTextCtrl, 0, wxALL | wxEXPAND, 5);
 
 	wxBoxSizer* nameDialogBtnSizer;
@@ -49,4 +50,12 @@ wxString RenamePageDialog::GetNameText()
 	wxString nameText;
 	nameText = pageNameTextCtrl->GetValue();
 	return nameText;
+}
+
+void RenamePageDialog::SetNameOnEnter(wxCommandEvent& event)
+{
+	if (pageNameTextCtrl->GetValue() != wxString(""))
+	{
+		okDialogBtn->SetFocus();
+	}
 }

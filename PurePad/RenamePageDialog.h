@@ -19,13 +19,14 @@
 
 class RenamePageDialog : public wxDialog
 {
-private:
-
 protected:
 	wxStaticText* pageNameLabel;
 	wxTextCtrl* pageNameTextCtrl;
 	wxBitmapButton* okDialogBtn;
 	wxBitmapButton* cancelDialogBtn;
+
+private:
+	void SetNameOnEnter(wxCommandEvent& event);
 
 public:
 	RenamePageDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Choose page name"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1, -1), long style = wxSTAY_ON_TOP);
