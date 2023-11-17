@@ -42,9 +42,6 @@ private:
 	RenamePageDialog* renamePageDialog;
 
 private:
-	unsigned int pageCounter;
-
-private:
 	void BindEvents();
 
 	void AddPage(wxCommandEvent& event);
