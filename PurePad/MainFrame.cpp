@@ -36,7 +36,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	addBtn->SetBitmapPressed(wxBitmap(pathToIcons + "addBtnPressed.png", wxBITMAP_TYPE_ANY));
 	addBtn->SetToolTip(wxT("Add page"));
 
-	buttonsSizer->Add(addBtn, 0, wxLEFT, 5);
+	buttonsSizer->Add(addBtn, 0, wxLEFT, this->FromDIP(5));
 
 	codeBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE | wxBORDER_NONE);
 
@@ -44,7 +44,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	codeBtn->SetBitmapPressed(wxBitmap(pathToIcons + "codeBtnPressed.png", wxBITMAP_TYPE_ANY));
 	codeBtn->SetToolTip(wxT("Add code page"));
 
-	buttonsSizer->Add(codeBtn, 0, wxLEFT, 5);
+	buttonsSizer->Add(codeBtn, 0, wxLEFT, this->FromDIP(5));
 
 	delBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE | wxBORDER_NONE);
 
@@ -52,8 +52,9 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	delBtn->SetBitmapPressed(wxBitmap(pathToIcons + "delBtnPressed.png", wxBITMAP_TYPE_ANY));
 	delBtn->SetToolTip(wxT("Delete page"));
 
-	buttonsSizer->Add(delBtn, 0, wxLEFT, 5);
+	buttonsSizer->Add(delBtn, 0, wxLEFT, this->FromDIP(5));
 
+	/*
 	wrapBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE);
 
 	wrapBtn->SetBitmap(wxBitmap(pathToIcons + "wrapBtn.png", wxBITMAP_TYPE_ANY));
@@ -62,6 +63,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 
 	buttonsSizer->Add(wrapBtn, 0, wxLEFT, 5);
 
+	
 	onTopBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE);
 
 	onTopBtn->SetBitmap(wxBitmap(pathToIcons + "onTopBtn.png", wxBITMAP_TYPE_ANY));
@@ -69,6 +71,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	onTopBtn->SetToolTip(wxT("Always on top"));
 
 	buttonsSizer->Add(onTopBtn, 0, wxLEFT, 5);
+	*/
 
 	editNameBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE);
 
@@ -76,8 +79,9 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	editNameBtn->SetBitmapPressed(wxBitmap(pathToIcons + "editBtnPressed.png", wxBITMAP_TYPE_ANY));
 	editNameBtn->SetToolTip(wxT("Edit page name"));
 
-	buttonsSizer->Add(editNameBtn, 0, wxLEFT, 5);
+	buttonsSizer->Add(editNameBtn, 0, wxLEFT, this->FromDIP(5));
 
+	/*
 	tabFillerLabel = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	tabFillerLabel->Wrap(-1);
 	buttonsSizer->Add(tabFillerLabel, 12, 0, 5);
@@ -94,6 +98,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	fontSizeTextCtrl->SetToolTip(wxT("Font size"));
 
 	buttonsSizer->Add(fontSizeTextCtrl, 0, wxALIGN_CENTER | wxRIGHT, 5);
+	*/
 
 
 	menuSizer->Add(buttonsSizer, 1, wxLEFT, 0);
@@ -105,7 +110,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 
 	genSizer->Add(menuSizer, 0, wxEXPAND, 0);
 
-
+	this->SetClientSize(this->FromDIP(300), this->FromDIP(500));
 	this->SetSizer(genSizer);
 	this->Layout();
 	this->Centre(wxBOTH);
@@ -123,6 +128,7 @@ void MainFrame::BindEvents()
 	codeBtn->Bind(wxEVT_BUTTON, &MainFrame::AddCodePage, this);
 	delBtn->Bind(wxEVT_BUTTON, &MainFrame::DeletePage, this);
 	editNameBtn->Bind(wxEVT_BUTTON, &MainFrame::RenamePage, this);
+	//wrapBtn->Bind(wxEVT_BUTTON, &MainFrame::ToggleWordWrap, this);
 }
 
 void MainFrame::AddPage(wxCommandEvent& event)
@@ -132,6 +138,8 @@ void MainFrame::AddPage(wxCommandEvent& event)
 	wxPanel* newPage = new wxPanel(genNotebook);
 	wxBoxSizer* pageTextSizer = new wxBoxSizer(wxVERTICAL);
 	wxTextCtrl* pageTextCtrl = new wxTextCtrl(newPage, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+	wxFont font = wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Consolas"));
+	pageTextCtrl->SetFont(font);
 	pageTextSizer->Add(pageTextCtrl, 1, wxEXPAND, 5);
 	newPage->SetSizer(pageTextSizer);
 	newPage->Layout();
@@ -276,4 +284,14 @@ void MainFrame::RenamePage(wxCommandEvent& event)
 	{
 		return;
 	}
+}
+
+void MainFrame::ToggleWordWrap(wxCommandEvent& event)
+{
+	if (genNotebook->GetSelection() == wxNOT_FOUND)
+	{
+		return;
+	}
+
+
 }
