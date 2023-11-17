@@ -35,6 +35,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	addBtn->SetBitmap(wxBitmap(pathToIcons + "addBtn.png", wxBITMAP_TYPE_ANY));
 	addBtn->SetBitmapPressed(wxBitmap(pathToIcons + "addBtnPressed.png", wxBITMAP_TYPE_ANY));
 	addBtn->SetToolTip(wxT("Add page"));
+	addBtn->SetBackgroundColour(Colors::darkGray);
 
 	buttonsSizer->Add(addBtn, 0, wxLEFT, this->FromDIP(5));
 
@@ -43,6 +44,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	codeBtn->SetBitmap(wxBitmap(pathToIcons + "codeBtn.png", wxBITMAP_TYPE_ANY));
 	codeBtn->SetBitmapPressed(wxBitmap(pathToIcons + "codeBtnPressed.png", wxBITMAP_TYPE_ANY));
 	codeBtn->SetToolTip(wxT("Add code page"));
+	codeBtn->SetBackgroundColour(Colors::darkGray);
 
 	buttonsSizer->Add(codeBtn, 0, wxLEFT, this->FromDIP(5));
 
@@ -51,6 +53,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	delBtn->SetBitmap(wxBitmap(pathToIcons + "delBtn.png", wxBITMAP_TYPE_ANY));
 	delBtn->SetBitmapPressed(wxBitmap(pathToIcons + "delBtnPressed.png", wxBITMAP_TYPE_ANY));
 	delBtn->SetToolTip(wxT("Delete page"));
+	delBtn->SetBackgroundColour(Colors::darkGray);
 
 	buttonsSizer->Add(delBtn, 0, wxLEFT, this->FromDIP(5));
 
@@ -60,6 +63,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	wrapBtn->SetBitmap(wxBitmap(pathToIcons + "wrapBtn.png", wxBITMAP_TYPE_ANY));
 	wrapBtn->SetBitmapPressed(wxBitmap(pathToIcons + "wrapBtnPressed.png", wxBITMAP_TYPE_ANY));
 	wrapBtn->SetToolTip(wxT("Word wrap"));
+	wrapBtn->SetBackgroundColour(Colors::darkGray);
 
 	buttonsSizer->Add(wrapBtn, 0, wxLEFT, 5);
 
@@ -69,6 +73,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	onTopBtn->SetBitmap(wxBitmap(pathToIcons + "onTopBtn.png", wxBITMAP_TYPE_ANY));
 	onTopBtn->SetBitmapPressed(wxBitmap(pathToIcons + "onTopBtnPressed.png", wxBITMAP_TYPE_ANY));
 	onTopBtn->SetToolTip(wxT("Always on top"));
+	onTopBtn->SetBackgroundColour(Colors::darkGray);
 
 	buttonsSizer->Add(onTopBtn, 0, wxLEFT, 5);
 	*/
@@ -78,6 +83,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	editNameBtn->SetBitmap(wxBitmap(pathToIcons + "editBtn.png", wxBITMAP_TYPE_ANY));
 	editNameBtn->SetBitmapPressed(wxBitmap(pathToIcons + "editBtnPressed.png", wxBITMAP_TYPE_ANY));
 	editNameBtn->SetToolTip(wxT("Edit page name"));
+	editNameBtn->SetBackgroundColour(Colors::darkGray);
 
 	buttonsSizer->Add(editNameBtn, 0, wxLEFT, this->FromDIP(5));
 
@@ -111,6 +117,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	genSizer->Add(menuSizer, 0, wxEXPAND, 0);
 
 	this->SetClientSize(this->FromDIP(300), this->FromDIP(500));
+	this->SetBackgroundColour(Colors::darkGray);
 	this->SetSizer(genSizer);
 	this->Layout();
 	this->Centre(wxBOTH);
