@@ -117,7 +117,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 
 	codeOptBtn->SetBitmap(wxBitmap(pathToIcons + "arrowBtn.png", wxBITMAP_TYPE_ANY));
 	codeOptBtn->SetBitmapPressed(wxBitmap(pathToIcons + "arrowBtnPressed.png", wxBITMAP_TYPE_ANY));
-	codeOptBtn->SetToolTip(wxT("Code options"));
+	codeOptBtn->SetToolTip(wxT("More options"));
 	codeOptBtn->SetBackgroundColour(Colors::darkGray);
 
 	buttonsSizer->Add(codeOptBtn, 0, wxRIGHT, this->FromDIP(5));
