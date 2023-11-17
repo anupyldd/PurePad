@@ -46,8 +46,12 @@ private:
 
 private:
 	void BindEvents();
+
 	void AddPage(wxCommandEvent& event);
+	void CreatePage(wxString& inPageName);
 	void AddCodePage(wxCommandEvent& event);
+	void CreateCodePage(wxString& inPageName);
+
 	void DeletePage(wxCommandEvent& event);
 	void RenamePage(wxCommandEvent& event);
 	void ToggleWordWrap(wxCommandEvent& event);

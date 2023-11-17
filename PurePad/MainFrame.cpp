@@ -146,7 +146,6 @@ void MainFrame::BindEvents()
 
 void MainFrame::AddPage(wxCommandEvent& event)
 {
-	pageCounter++;
 
 	wxPanel* newPage = new wxPanel(genNotebook);
 	wxBoxSizer* pageTextSizer = new wxBoxSizer(wxVERTICAL);
@@ -162,8 +161,6 @@ void MainFrame::AddPage(wxCommandEvent& event)
 
 void MainFrame::AddCodePage(wxCommandEvent& event)
 {
-	pageCounter++;
-
 	wxPanel* newCodePage = new wxPanel(genNotebook);
 	wxBoxSizer* codePageTextSizer = new wxBoxSizer(wxVERTICAL);
 	
@@ -251,6 +248,97 @@ void MainFrame::AddCodePage(wxCommandEvent& event)
 	newCodePage->Layout();
 
 	genNotebook->AddPage(newCodePage, wxString("new"), true);
+}
+
+void MainFrame::CreateCodePage(wxString& inPageName)
+{
+	wxPanel* newCodePage = new wxPanel(genNotebook);
+	wxBoxSizer* codePageTextSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxStyledTextCtrl* codeStyledText = new wxStyledTextCtrl(newCodePage, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE, wxEmptyString);
+
+	{
+		wxFont font = wxFont(wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Consolas"));
+		codeStyledText->StyleSetFont(wxSTC_STYLE_DEFAULT, font);
+	}
+
+	codeStyledText->StyleClearAll();
+	codeStyledText->SetLexer(wxSTC_LEX_CPP);
+
+	codeStyledText->SetMarginWidth(0, codeStyledText->TextWidth(wxSTC_STYLE_LINENUMBER, wxT("_99999")));
+	codeStyledText->StyleSetForeground(wxSTC_STYLE_LINENUMBER, wxColour(75, 75, 75));
+	codeStyledText->StyleSetBackground(wxSTC_STYLE_LINENUMBER, wxColour(220, 220, 220));
+	codeStyledText->SetMarginType(0, wxSTC_MARGIN_NUMBER);
+
+
+	codeStyledText->SetMarginType(wxSTC_MARGIN_NUMBER, wxSTC_MARGIN_SYMBOL);
+	codeStyledText->SetMarginWidth(wxSTC_MARGIN_NUMBER, 15);
+	codeStyledText->SetMarginMask(wxSTC_MARGIN_NUMBER, wxSTC_MASK_FOLDERS);
+	codeStyledText->StyleSetBackground(wxSTC_MARGIN_NUMBER, wxColor(200, 200, 200));
+	codeStyledText->SetMarginSensitive(wxSTC_MARGIN_NUMBER, true);
+
+	codeStyledText->SetProperty(wxT("fold"), wxT("1"));
+	codeStyledText->SetProperty(wxT("fold.comment"), wxT("1"));
+	codeStyledText->SetProperty(wxT("fold.compact"), wxT("1"));
+
+	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDER, wxSTC_MARK_ARROW);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDER, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDER, Colors::lightGray);
+
+	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDEROPEN, wxSTC_MARK_ARROWDOWN);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEROPEN, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDEROPEN, Colors::lightGray);
+
+	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDERSUB, wxSTC_MARK_EMPTY);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERSUB, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERSUB, Colors::lightGray);
+
+	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDEREND, wxSTC_MARK_ARROW);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEREND, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDEREND, _T("WHITE"));
+
+	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_ARROWDOWN);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEROPENMID, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDEROPENMID, _T("WHITE"));
+
+	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERMIDTAIL, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERMIDTAIL, Colors::lightGray);
+
+	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDERTAIL, wxSTC_MARK_EMPTY);
+	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERTAIL, Colors::lightGray);
+	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERTAIL, Colors::lightGray);
+
+
+	//codeStyledText->SetWrapMode(wxSTC_WRAP_WORD); 
+	codeStyledText->SetWrapMode(wxSTC_WRAP_NONE);
+
+
+	codeStyledText->StyleSetForeground(wxSTC_C_STRING, Colors::string);
+	codeStyledText->StyleSetForeground(wxSTC_C_PREPROCESSOR, Colors::preprocessor);
+	codeStyledText->StyleSetForeground(wxSTC_C_IDENTIFIER, Colors::identifier);
+	codeStyledText->StyleSetForeground(wxSTC_C_NUMBER, Colors::number);
+	codeStyledText->StyleSetForeground(wxSTC_C_CHARACTER, Colors::character);
+	codeStyledText->StyleSetForeground(wxSTC_C_WORD, Colors::word);
+	codeStyledText->StyleSetForeground(wxSTC_C_WORD2, Colors::word2);
+	codeStyledText->StyleSetForeground(wxSTC_C_COMMENT, Colors::comment);
+	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTLINE, Colors::commentLine);
+	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOC, Colors::commentDoc);
+	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOCKEYWORD, Colors::commentDocKeyword);
+	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOCKEYWORDERROR, Colors::commentDocKeywordError);
+	codeStyledText->StyleSetBold(wxSTC_C_WORD, true);
+	codeStyledText->StyleSetBold(wxSTC_C_WORD2, true);
+	codeStyledText->StyleSetBold(wxSTC_C_COMMENTDOCKEYWORD, true);
+
+	codeStyledText->SetKeyWords(0, wxT("alignas alignof and and_eq asm atomic_cancel atomic_commit atomic_noexcept auto bitand bitor break case catch class compl concept const consteval constexpr constinit const_cast continue co_await co_return co_yield decltype default delete do dynamic_cast else enum explicit export extern false for friend goto if inline mutable namespace new noexcept not not_eq nullptr operator or or_eq private protected public reflexpr register reinterpret_cast requires return sizeof static static_assert static_cast struct switch synchronized template this thread_local throw true try typedef typeid typename union using virtual volatile while xor xor_eq"));
+	codeStyledText->SetKeyWords(1, wxT("const signed unsigned int float void char double bool char8_t char16_t char32_t wchar_t"));
+
+	codePageTextSizer->Add(codeStyledText, 1, wxEXPAND, 5);
+
+	newCodePage->SetSizer(codePageTextSizer);
+	newCodePage->Layout();
+
+	genNotebook->AddPage(newCodePage, inPageName, true);
 }
 
 void MainFrame::DeletePage(wxCommandEvent& event)
@@ -349,10 +437,10 @@ void MainFrame::SavePagesToTextFiles(wxCloseEvent& event)
 			{ 
 				std::string textValue = codePageTextCtrl->GetValue().ToStdString();
 				std::string pageName = genNotebook->GetPageText(i).ToStdString();
-				pageName += ".txt";
+				pageName += "_codePage.txt";
 				std::string pathToFile = pathToPages.string() + "\\" + pageName;
 				std::ofstream pageFile(pathToFile);
-
+				
 				pageFile << textValue;
 
 				pageFile.close();
@@ -369,7 +457,7 @@ void MainFrame::SavePagesToTextFiles(wxCloseEvent& event)
 
 void MainFrame::LoadPagesFromTextFiles()
 {
-	/*
+	
 	std::filesystem::path pathToCwd = std::filesystem::current_path();
 	std::filesystem::path pathToPages = pathToCwd / "Pages";
 
@@ -389,17 +477,31 @@ void MainFrame::LoadPagesFromTextFiles()
 				std::filesystem::path fileNamePath = pathToFile.filename();
 
 				std::string pageName = fileNamePath.string();
+				pageName = pageName.substr(0, pageName.length() - 4);	// remove file extension
 
 				std::ifstream fileText(pathToFile);
+				std::string textFromFile;
 				std::string textForPage;
-				while (std::getline(fileText, textForPage))
+				while (std::getline(fileText, textFromFile))
 				{
-
+					textForPage += textFromFile;
 				}
+				wxString wxTextForPage(textForPage);
 
-				
+				// create code page
+				if (pageName.find("_codePage") != pageName.npos) 
+				{
+					pageName = pageName.substr(0, pageName.length() - 9); //remove "_codePage"
+					wxString wxPageName(pageName);
+					CreateCodePage(wxPageName);
+					
+					wxWindow* pagePanel = genNotebook->GetPage(genNotebook->GetPageCount() - 1);
+					wxWindowList pageChildren = pagePanel->GetChildren();
+					wxStyledTextCtrl* pageTextCtrl = dynamic_cast<wxStyledTextCtrl*>(pageChildren[0]);
+					pageTextCtrl->SetValue(wxTextForPage);
+				}
 			}
 		}
 	}
-	*/
+	
 }
