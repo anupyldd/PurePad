@@ -21,6 +21,7 @@
 #include <wx/frame.h>
 
 #include "DeletePageDialog.h"
+#include "RenamePageDialog.h"
 
 class MainFrame : public wxFrame
 {
@@ -38,6 +39,7 @@ private:
 	wxTextCtrl* fontSizeTextCtrl;
 
 	DeletePageDialog* deletePageDialog;
+	RenamePageDialog* renamePageDialog;
 
 private:
 	unsigned int pageCounter;
@@ -47,6 +49,7 @@ private:
 	void AddPage(wxCommandEvent& event);
 	void AddCodePage(wxCommandEvent& event);
 	void DeletePage(wxCommandEvent& event);
+	void RenamePage(wxCommandEvent& event);
 
 public:
 	MainFrame(const wxString& title = "PurePad", const wxSize& size = wxSize(500, 300),

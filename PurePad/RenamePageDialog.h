@@ -23,14 +23,13 @@ private:
 
 protected:
 	wxStaticText* pageNameLabel;
-	wxTextCtrl* m_textCtrl3;
+	wxTextCtrl* pageNameTextCtrl;
 	wxBitmapButton* okDialogBtn;
 	wxBitmapButton* cancelDialogBtn;
 
 public:
-
 	RenamePageDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Choose page name"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1, -1), long style = wxSTAY_ON_TOP);
-
 	~RenamePageDialog();
 
+	wxString GetNameText();
 };

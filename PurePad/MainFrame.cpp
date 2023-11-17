@@ -122,6 +122,7 @@ void MainFrame::BindEvents()
 	addBtn->Bind(wxEVT_BUTTON, &MainFrame::AddPage, this);
 	codeBtn->Bind(wxEVT_BUTTON, &MainFrame::AddCodePage, this);
 	delBtn->Bind(wxEVT_BUTTON, &MainFrame::DeletePage, this);
+	editNameBtn->Bind(wxEVT_BUTTON, &MainFrame::RenamePage, this);
 }
 
 void MainFrame::AddPage(wxCommandEvent& event)
@@ -249,4 +250,30 @@ void MainFrame::DeletePage(wxCommandEvent& event)
 		return;
 	}
 	
+}
+
+void MainFrame::RenamePage(wxCommandEvent& event)
+{
+	if (genNotebook->GetSelection() == wxNOT_FOUND)
+	{
+		return;
+	}
+
+	renamePageDialog = new RenamePageDialog(this);
+
+	if (renamePageDialog->ShowModal() == wxID_OK)
+	{
+		if (renamePageDialog->GetNameText() != wxString(""))
+		{
+			genNotebook->SetPageText(genNotebook->GetSelection(), renamePageDialog->GetNameText());
+		}
+		else
+		{
+			return;
+		}
+	}
+	else
+	{
+		return;
+	}
 }
