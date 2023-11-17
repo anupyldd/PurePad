@@ -368,3 +368,5 @@ FodyWeavers.xsd
 *.vcxproj.user
 *.vcxproj.filters
 *.sln
+
+PurePad/Pages/
