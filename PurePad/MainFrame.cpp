@@ -213,11 +213,11 @@ void MainFrame::AddCodePage(wxCommandEvent& event)
 	codeStyledText->StyleSetBold(wxSTC_C_WORD2, true);
 	codeStyledText->StyleSetBold(wxSTC_C_COMMENTDOCKEYWORD, true);
 
-	codeStyledText->SetKeyWords(0, wxT("return for while break continue"));
-	codeStyledText->SetKeyWords(1, wxT("const int float void char double unsigned"));
+	codeStyledText->SetKeyWords(0, wxT("alignas alignof and and_eq asm atomic_cancel atomic_commit atomic_noexcept auto bitand bitor break case catch class compl concept const consteval constexpr constinit const_cast continue co_await co_return co_yield decltype default delete do dynamic_cast else enum explicit export extern false for friend goto if inline mutable namespace new noexcept not not_eq nullptr operator or or_eq private protected public reflexpr register reinterpret_cast requires return sizeof static static_assert static_cast struct switch synchronized template this thread_local throw true try typedef typeid typename union using virtual volatile while xor xor_eq"));
+	codeStyledText->SetKeyWords(1, wxT("const signed unsigned int float void char double bool char8_t char16_t char32_t wchar_t"));
 
 	codePageTextSizer->Add(codeStyledText, 1, wxEXPAND, 5);
-
+	
 	newCodePage->SetSizer(codePageTextSizer);
 	newCodePage->Layout();
 
