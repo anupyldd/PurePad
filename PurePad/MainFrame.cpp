@@ -101,9 +101,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	wxBoxSizer* tabSizer;
 	tabSizer = new wxBoxSizer(wxVERTICAL);
 
-
 	menuSizer->Add(tabSizer, 1, wxEXPAND, 0);
-
 
 	genSizer->Add(menuSizer, 0, wxEXPAND, 0);
 
@@ -123,6 +121,7 @@ void MainFrame::BindEvents()
 {
 	addBtn->Bind(wxEVT_BUTTON, &MainFrame::AddPage, this);
 	codeBtn->Bind(wxEVT_BUTTON, &MainFrame::AddCodePage, this);
+	delBtn->Bind(wxEVT_BUTTON, &MainFrame::DeletePage, this);
 }
 
 void MainFrame::AddPage(wxCommandEvent& event)
@@ -136,7 +135,7 @@ void MainFrame::AddPage(wxCommandEvent& event)
 	newPage->SetSizer(pageTextSizer);
 	newPage->Layout();
 
-	genNotebook->AddPage(newPage, wxString("page"), true);
+	genNotebook->AddPage(newPage, wxString("new"), true);
 }
 
 void MainFrame::AddCodePage(wxCommandEvent& event)
@@ -229,5 +228,13 @@ void MainFrame::AddCodePage(wxCommandEvent& event)
 	newCodePage->SetSizer(codePageTextSizer);
 	newCodePage->Layout();
 
-	genNotebook->AddPage(newCodePage, wxString("code page"), true);
+	genNotebook->AddPage(newCodePage, wxString("new"), true);
+}
+
+void MainFrame::DeletePage(wxCommandEvent& event)
+{
+	if (genNotebook->GetSelection() != wxNOT_FOUND) 
+	{
+		genNotebook->DeletePage(genNotebook->GetSelection());
+	}
 }
