@@ -52,6 +52,7 @@ private:
 	void RenamePage(wxCommandEvent& event);
 	void ToggleWordWrap(wxCommandEvent& event);
 	void SavePagesToTextFiles(wxCloseEvent& event);
+	void LoadPagesFromTextFiles();
 
 public:
 	MainFrame(const wxString& title = "PurePad", const wxSize& size = wxSize(500, 300),

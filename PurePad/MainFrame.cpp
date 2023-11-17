@@ -128,6 +128,7 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	this->Centre(wxBOTH);
 
 	BindEvents();
+	LoadPagesFromTextFiles();
 }
 
 MainFrame::~MainFrame()
@@ -140,8 +141,6 @@ void MainFrame::BindEvents()
 	codeBtn->Bind(wxEVT_BUTTON, &MainFrame::AddCodePage, this);
 	delBtn->Bind(wxEVT_BUTTON, &MainFrame::DeletePage, this);
 	editNameBtn->Bind(wxEVT_BUTTON, &MainFrame::RenamePage, this);
-	//wrapBtn->Bind(wxEVT_BUTTON, &MainFrame::ToggleWordWrap, this);
-	//this->Bind(wxEVT_CLOSE_WINDOW, &MainFrame::SavePagesToTextFiles, this);
 	Bind(wxEVT_CLOSE_WINDOW, &MainFrame::SavePagesToTextFiles, this);
 }
 
@@ -345,9 +344,62 @@ void MainFrame::SavePagesToTextFiles(wxCloseEvent& event)
 		}
 		else
 		{
-			continue;
+			wxStyledTextCtrl* codePageTextCtrl = dynamic_cast<wxStyledTextCtrl*>(pageChildren[0]);
+			if (codePageTextCtrl)
+			{ 
+				std::string textValue = codePageTextCtrl->GetValue().ToStdString();
+				std::string pageName = genNotebook->GetPageText(i).ToStdString();
+				pageName += ".txt";
+				std::string pathToFile = pathToPages.string() + "\\" + pageName;
+				std::ofstream pageFile(pathToFile);
+
+				pageFile << textValue;
+
+				pageFile.close();
+			}
+			else
+			{
+				continue;
+			}
 		}
 	}
 	
 	Destroy();
+}
+
+void MainFrame::LoadPagesFromTextFiles()
+{
+	/*
+	std::filesystem::path pathToCwd = std::filesystem::current_path();
+	std::filesystem::path pathToPages = pathToCwd / "Pages";
+
+	if (std::filesystem::is_empty(pathToPages))
+	{
+		return;
+	}
+
+	for (const auto& dirEntry : std::filesystem::recursive_directory_iterator(pathToPages))
+	{
+
+		if (dirEntry.exists())
+		{
+			if (dirEntry.file_size() != 0)
+			{
+				std::filesystem::path pathToFile = dirEntry.path();
+				std::filesystem::path fileNamePath = pathToFile.filename();
+
+				std::string pageName = fileNamePath.string();
+
+				std::ifstream fileText(pathToFile);
+				std::string textForPage;
+				while (std::getline(fileText, textForPage))
+				{
+
+				}
+
+				
+			}
+		}
+	}
+	*/
 }
