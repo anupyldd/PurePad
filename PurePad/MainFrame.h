@@ -50,6 +50,7 @@ private:
 	void AddCodePage(wxCommandEvent& event);
 	void DeletePage(wxCommandEvent& event);
 	void RenamePage(wxCommandEvent& event);
+	void ToggleWordWrap(wxCommandEvent& event);
 
 public:
 	MainFrame(const wxString& title = "PurePad", const wxSize& size = wxSize(500, 300),
