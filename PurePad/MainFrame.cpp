@@ -70,6 +70,14 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 
 	buttonsSizer->Add(onTopBtn, 0, wxLEFT, 5);
 
+	editNameBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE);
+
+	editNameBtn->SetBitmap(wxBitmap(pathToIcons + "editBtn.png", wxBITMAP_TYPE_ANY));
+	editNameBtn->SetBitmapPressed(wxBitmap(pathToIcons + "editBtnPressed.png", wxBITMAP_TYPE_ANY));
+	editNameBtn->SetToolTip(wxT("Edit page name"));
+
+	buttonsSizer->Add(editNameBtn, 0, wxLEFT, 5);
+
 	tabFillerLabel = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	tabFillerLabel->Wrap(-1);
 	buttonsSizer->Add(tabFillerLabel, 12, 0, 5);

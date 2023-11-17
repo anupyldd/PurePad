@@ -33,6 +33,7 @@ private:
 	wxBitmapButton* codeBtn;
 	wxBitmapButton* wrapBtn;
 	wxBitmapButton* onTopBtn;
+	wxBitmapButton* editNameBtn;
 	wxStaticText* tabFillerLabel;
 	wxTextCtrl* fontSizeTextCtrl;
 
