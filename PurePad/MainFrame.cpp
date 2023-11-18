@@ -163,7 +163,7 @@ void MainFrame::AddPage(wxCommandEvent& event)
 	wxPanel* newPage = new wxPanel(genNotebook);
 	wxBoxSizer* pageTextSizer = new wxBoxSizer(wxVERTICAL);
 	wxTextCtrl* pageTextCtrl = new wxTextCtrl(newPage, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
-	wxFont font = wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Consolas"));
+	wxFont font = wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Courier New"));
 	pageTextCtrl->SetFont(font);
 	pageTextSizer->Add(pageTextCtrl, 1, wxEXPAND, 5);
 	newPage->SetSizer(pageTextSizer);
@@ -177,7 +177,7 @@ void MainFrame::CreatePage(wxString& inPageName)
 	wxPanel* newPage = new wxPanel(genNotebook);
 	wxBoxSizer* pageTextSizer = new wxBoxSizer(wxVERTICAL);
 	wxTextCtrl* pageTextCtrl = new wxTextCtrl(newPage, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
-	wxFont font = wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Consolas"));
+	wxFont font = wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Courier New"));
 	pageTextCtrl->SetFont(font);
 	pageTextSizer->Add(pageTextCtrl, 1, wxEXPAND, 5);
 	newPage->SetSizer(pageTextSizer);
@@ -194,7 +194,7 @@ void MainFrame::AddCodePage(wxCommandEvent& event)
 	wxStyledTextCtrl* codeStyledText = new wxStyledTextCtrl(newCodePage, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE, wxEmptyString);
 	
 	{
-		wxFont font = wxFont(wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Consolas"));
+		wxFont font = wxFont(wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Courier New"));
 		codeStyledText->StyleSetFont(wxSTC_STYLE_DEFAULT, font);
 	}
 
@@ -285,7 +285,7 @@ void MainFrame::CreateCodePage(wxString& inPageName)
 	wxStyledTextCtrl* codeStyledText = new wxStyledTextCtrl(newCodePage, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE, wxEmptyString);
 
 	{
-		wxFont font = wxFont(wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Consolas"));
+		wxFont font = wxFont(wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Courier New"));
 		codeStyledText->StyleSetFont(wxSTC_STYLE_DEFAULT, font);
 	}
 
