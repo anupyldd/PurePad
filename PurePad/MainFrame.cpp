@@ -452,13 +452,18 @@ void MainFrame::UpdateCodeOptions(wxCommandEvent& event)
 		return;
 	}
 
+	if (codeOptionsDialog)
+	{
+		codeOptionsDialog = nullptr;
+	}
+
 	wxWindow* pagePanel = genNotebook->GetPage(genNotebook->GetSelection());
 	wxWindowList pageChildren = pagePanel->GetChildren();
 	wxStyledTextCtrl* pageTextCtrl = dynamic_cast<wxStyledTextCtrl*>(pageChildren[0]);
 	if (pageTextCtrl) 
 	{
 		codeOptionsDialog = new CodeOptionsDialog(genNotebook);
-		codeOptionsDialog->Show();
+		codeOptionsDialog->Show(true);
 		//optionsBtn->Disable();
 	}
 }

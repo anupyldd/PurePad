@@ -2,7 +2,7 @@
 
 #include "wx/wx.h"
 
-enum Lang
+enum CodeLang
 {
 	CPP = 0,
 	PYTHON = 1,
@@ -12,7 +12,7 @@ enum Lang
 
 namespace Keywords
 {
-	static Lang currentLang = CPP;
+	static CodeLang currentCodeLang;
 
 	static wxString cpp("alignas alignof and and_eq asm atomic_cancel atomic_commit atomic_noexcept auto bitand bitor break case catch class compl concept const consteval constexpr constinit const_cast continue co_await co_return co_yield decltype default delete do dynamic_cast else enum explicit export extern false for friend goto if inline mutable namespace new noexcept not not_eq nullptr operator or or_eq private protected public reflexpr register reinterpret_cast requires return sizeof static static_assert static_cast struct switch synchronized template this thread_local throw true try typedef typeid typename union using virtual volatile while xor xor_eq");
 	static wxString cpp2("const signed unsigned int float void char double bool char8_t char16_t char32_t wchar_t");
