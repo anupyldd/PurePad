@@ -13,5 +13,6 @@ Planned updates before v1.0 release:
 - More programming language options for code pages
 - Rich text support for plain text pages
 - Dark color theme
+- Localization to other languages
 - App icon
 - Bug fixes
