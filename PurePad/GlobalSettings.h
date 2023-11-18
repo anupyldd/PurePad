@@ -1,5 +1,8 @@
 #pragma once
 
+#include "SyntaxHighlighting.h"
+#include <unordered_map>
+
 namespace Settings
 {
 	enum AppTheme
@@ -16,4 +19,6 @@ namespace Settings
 
 	static AppTheme currentTheme;
 	static AppLang currentLanguage;
+
+	static std::unordered_map<int, CodeLang> codePageLang;	// stores lang selection for each code page
 }

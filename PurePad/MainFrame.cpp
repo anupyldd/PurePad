@@ -388,6 +388,7 @@ void MainFrame::DeletePage(wxCommandEvent& event)
 		{
 			std::filesystem::path pathToFile = dirEntry.path();
 			std::string fileName = pathToFile.filename().string();
+			fileName = fileName.substr(0, fileName.length() - 4);
 
 			if (fileName == genNotebook->GetPageText(genNotebook->GetSelection()).ToStdString() ||
 				fileName == genNotebook->GetPageText(genNotebook->GetSelection()).ToStdString() + "_codePage")
