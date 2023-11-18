@@ -16,7 +16,7 @@
 class CodeOptionsDialog : public wxDialog
 {
 private:
-	void ChangeCurrentLang(wxCommandEvent& event);
+	void ChangeCurrentCodeLang(wxCommandEvent& event);
 	void UpdateHighlight(wxString& inWords, wxString& inWords2);
 	void CloseOnLoseFocus(wxActivateEvent& event);
 

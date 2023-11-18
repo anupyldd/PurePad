@@ -12,8 +12,8 @@ CodeOptionsDialog::CodeOptionsDialog(wxWindow* parent, wxWindowID id, const wxSt
 	wxString syntaxRadioBoxChoices[] = { wxT("C/C++"), wxT("Python"), wxT("Java"), wxT("JavaScript") };
 	int syntaxRadioBoxNChoices = sizeof(syntaxRadioBoxChoices) / sizeof(wxString);
 	syntaxRadioBox = new wxRadioBox(this, wxID_ANY, wxT("Syntax highlighting"), wxDefaultPosition, wxDefaultSize, syntaxRadioBoxNChoices, syntaxRadioBoxChoices, 3, wxRA_SPECIFY_COLS);
-	syntaxRadioBox->SetSelection(Keywords::currentLang);
-	Bind(wxEVT_RADIOBOX, &CodeOptionsDialog::ChangeCurrentLang, this);
+	syntaxRadioBox->SetSelection(Keywords::currentCodeLang);
+	Bind(wxEVT_RADIOBOX, &CodeOptionsDialog::ChangeCurrentCodeLang, this);
 	codeOptionsSizer->Add(syntaxRadioBox, 0, 0, 5);
 
 	
@@ -30,28 +30,28 @@ CodeOptionsDialog::~CodeOptionsDialog()
 {
 }
 
-void CodeOptionsDialog::ChangeCurrentLang(wxCommandEvent& event)
+void CodeOptionsDialog::ChangeCurrentCodeLang(wxCommandEvent& event)
 {
 	switch (syntaxRadioBox->GetSelection())
 	{
-	case Lang::CPP:
+	case CodeLang::CPP:
 		UpdateHighlight(Keywords::cpp, Keywords::cpp2);
-		Keywords::currentLang = CPP;
+		Keywords::currentCodeLang = CPP;
 		break;
 
-	case Lang::PYTHON:
+	case CodeLang::PYTHON:
 		UpdateHighlight(Keywords::python, Keywords::python);
-		Keywords::currentLang = PYTHON;
+		Keywords::currentCodeLang = PYTHON;
 		break;
 
-	case Lang::JAVA:
+	case CodeLang::JAVA:
 		UpdateHighlight(Keywords::java, Keywords::java2);
-		Keywords::currentLang = JAVA;
+		Keywords::currentCodeLang = JAVA;
 		break;
 
-	case Lang::JS:
+	case CodeLang::JS:
 		UpdateHighlight(Keywords::javaScript, Keywords::javaScript2);
-		Keywords::currentLang = JS;
+		Keywords::currentCodeLang = JS;
 		break;
 
 	default:
@@ -78,7 +78,6 @@ void CodeOptionsDialog::UpdateHighlight(wxString& inWords, wxString& inWords2)
 	}
 }
 
-// does not currently work
 void CodeOptionsDialog::CloseOnLoseFocus(wxActivateEvent& event)
 {
 	if (!event.GetActive())
