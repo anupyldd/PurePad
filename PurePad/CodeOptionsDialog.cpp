@@ -16,13 +16,14 @@ CodeOptionsDialog::CodeOptionsDialog(wxWindow* parent, wxWindowID id, const wxSt
 	Bind(wxEVT_RADIOBOX, &CodeOptionsDialog::ChangeCurrentLang, this);
 	codeOptionsSizer->Add(syntaxRadioBox, 0, 0, 5);
 
-
+	
 	this->SetSizer(codeOptionsSizer);
 	this->Layout();
 	codeOptionsSizer->Fit(this);
 
 	this->SetPosition(wxGetMousePosition() - this->GetSize());
 	//this->Centre(wxBOTH);
+	Bind(wxEVT_ACTIVATE, &CodeOptionsDialog::CloseOnLoseFocus, this);
 }
 
 CodeOptionsDialog::~CodeOptionsDialog()
@@ -74,5 +75,14 @@ void CodeOptionsDialog::UpdateHighlight(wxString& inWords, wxString& inWords2)
 
 		pageTextCtrl->SetKeyWords(0, inWords);
 		pageTextCtrl->SetKeyWords(1, inWords2);
+	}
+}
+
+// does not currently work
+void CodeOptionsDialog::CloseOnLoseFocus(wxActivateEvent& event)
+{
+	if (!event.GetActive())
+	{
+		Destroy();
 	}
 }

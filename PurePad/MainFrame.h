@@ -33,7 +33,7 @@ private:
 	wxBitmapButton* addBtn;
 	wxBitmapButton* delBtn;
 	wxBitmapButton* codeBtn;
-	wxBitmapButton* codeOptBtn;
+	wxBitmapButton* optionsBtn;
 	wxBitmapButton* wrapBtn;
 	wxBitmapButton* onTopBtn;
 	wxBitmapButton* editNameBtn;

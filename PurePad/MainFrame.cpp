@@ -113,14 +113,14 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	buttonsSizer->Add(fontSizeTextCtrl, 0, wxALIGN_CENTER | wxRIGHT, 5);
 	*/
 
-	codeOptBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE | wxBORDER_NONE);
+	optionsBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE | wxBORDER_NONE);
 
-	codeOptBtn->SetBitmap(wxBitmap(pathToIcons + "arrowBtn.png", wxBITMAP_TYPE_ANY));
-	codeOptBtn->SetBitmapPressed(wxBitmap(pathToIcons + "arrowBtnPressed.png", wxBITMAP_TYPE_ANY));
-	codeOptBtn->SetToolTip(wxT("More options"));
-	codeOptBtn->SetBackgroundColour(Colors::darkGray);
+	optionsBtn->SetBitmap(wxBitmap(pathToIcons + "arrowBtn.png", wxBITMAP_TYPE_ANY));
+	optionsBtn->SetBitmapPressed(wxBitmap(pathToIcons + "arrowBtnPressed.png", wxBITMAP_TYPE_ANY));
+	optionsBtn->SetToolTip(wxT("More options"));
+	optionsBtn->SetBackgroundColour(Colors::darkGray);
 
-	buttonsSizer->Add(codeOptBtn, 0, wxRIGHT, this->FromDIP(5));
+	buttonsSizer->Add(optionsBtn, 0, wxRIGHT, this->FromDIP(5));
 
 
 	menuSizer->Add(buttonsSizer, 1, wxLEFT, 0);
@@ -152,8 +152,9 @@ void MainFrame::BindEvents()
 	codeBtn->Bind(wxEVT_BUTTON, &MainFrame::AddCodePage, this);
 	delBtn->Bind(wxEVT_BUTTON, &MainFrame::DeletePage, this);
 	editNameBtn->Bind(wxEVT_BUTTON, &MainFrame::RenamePage, this);
-	codeOptBtn->Bind(wxEVT_BUTTON, &MainFrame::UpdateCodeOptions, this);
+	optionsBtn->Bind(wxEVT_BUTTON, &MainFrame::UpdateCodeOptions, this);
 
+	//this->Bind(wxEVT_SET_FOCUS, &MainFrame::CloseOptionsOnFocus, this);
 	Bind(wxEVT_CLOSE_WINDOW, &MainFrame::SavePagesToTextFiles, this);
 }
 
@@ -457,7 +458,8 @@ void MainFrame::UpdateCodeOptions(wxCommandEvent& event)
 	if (pageTextCtrl) 
 	{
 		codeOptionsDialog = new CodeOptionsDialog(genNotebook);
-		codeOptionsDialog->ShowModal();
+		codeOptionsDialog->Show();
+		//optionsBtn->Disable();
 	}
 }
 
