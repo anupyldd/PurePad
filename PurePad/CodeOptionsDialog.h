@@ -13,11 +13,13 @@
 #include <wx/notebook.h>
 #include <wx/stc/stc.h>
 
+#include "SyntaxHighlighting.h"
+
 class CodeOptionsDialog : public wxDialog
 {
 private:
 	void ChangeCurrentCodeLang(wxCommandEvent& event);
-	void UpdateHighlight(wxString& inWords, wxString& inWords2);
+	void UpdateHighlight(wxString& inWords, wxString& inWords2, CodeLang inLang);
 	void CloseOnLoseFocus(wxActivateEvent& event);
 
 protected:

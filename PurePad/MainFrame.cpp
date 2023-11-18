@@ -1,7 +1,4 @@
 #include "MainFrame.h"
-#include "ThemeColors.h"
-#include "SyntaxHighlighting.h"
-#include "GlobalSettings.h"
 
 #include <filesystem>
 #include <iostream>
@@ -154,6 +151,7 @@ void MainFrame::BindEvents()
 	delBtn->Bind(wxEVT_BUTTON, &MainFrame::DeletePage, this);
 	editNameBtn->Bind(wxEVT_BUTTON, &MainFrame::RenamePage, this);
 	optionsBtn->Bind(wxEVT_BUTTON, &MainFrame::UpdateCodeOptions, this);
+	genNotebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &MainFrame::UpdateCurrentCodeLang, this);
 
 	//this->Bind(wxEVT_SET_FOCUS, &MainFrame::CloseOptionsOnFocus, this);
 	Bind(wxEVT_CLOSE_WINDOW, &MainFrame::SavePagesToTextFiles, this);
@@ -181,7 +179,7 @@ void MainFrame::CreatePage(wxString& inPageName)
 
 void MainFrame::AddCodePage(wxCommandEvent& event)
 {
-	wxString pageName("new");
+	wxString pageName("new.cpp");
 	CreateCodePage(pageName);
 }
 
@@ -372,6 +370,59 @@ void MainFrame::UpdateCodeOptions(wxCommandEvent& event)
 	}
 }
 
+void MainFrame::UpdateCurrentCodeLang(wxBookCtrlEvent& event)
+{
+	if (Settings::codePageLang.find(genNotebook->GetSelection()) != Settings::codePageLang.end())
+	{
+		Keywords::currentCodeLang = Settings::codePageLang.at(genNotebook->GetSelection());
+
+		UpdateSyntaxHighlight(Keywords::currentCodeLang);
+	}
+}
+
+void MainFrame::UpdateSyntaxHighlight(CodeLang inLang)
+{
+	wxWindow* curPage = genNotebook->GetCurrentPage();
+	wxWindowList pageChildren = curPage->GetChildren();
+	wxStyledTextCtrl* pageTextCtrl = dynamic_cast<wxStyledTextCtrl*>(pageChildren[0]);
+
+	if (pageTextCtrl)
+	{
+		pageTextCtrl->SetKeyWords(0, "");
+		pageTextCtrl->SetKeyWords(1, "");
+
+		switch (inLang)
+		{
+		case CPP:
+			//pageTextCtrl->ClearDocumentStyle();
+			pageTextCtrl->SetKeyWords(0, Keywords::cpp);
+			pageTextCtrl->SetKeyWords(1, Keywords::cpp2);
+			break;
+
+		case PYTHON:
+			//pageTextCtrl->ClearDocumentStyle();
+			pageTextCtrl->SetKeyWords(0, Keywords::python);
+			pageTextCtrl->SetKeyWords(1, Keywords::python);
+			break;
+
+		case JAVA:
+			//pageTextCtrl->ClearDocumentStyle();
+			pageTextCtrl->SetKeyWords(0, Keywords::java);
+			pageTextCtrl->SetKeyWords(1, Keywords::java2);
+			break;
+
+		case JS:
+			//pageTextCtrl->ClearDocumentStyle();
+			pageTextCtrl->SetKeyWords(0, Keywords::javaScript);
+			pageTextCtrl->SetKeyWords(1, Keywords::javaScript2);
+			break;
+
+		default:
+			break;
+		}
+	}
+}
+
 void MainFrame::SavePagesToTextFiles(wxCloseEvent& event)
 {
 	
@@ -414,6 +465,7 @@ void MainFrame::SavePagesToTextFiles(wxCloseEvent& event)
 				std::string textValue = codePageTextCtrl->GetValue().ToStdString();
 				std::string pageName = genNotebook->GetPageText(i).ToStdString();
 				//pageName += "_codePage.txt";
+				/*
 				switch (Settings::codePageLang[i])
 				{
 				case CPP:
@@ -434,7 +486,7 @@ void MainFrame::SavePagesToTextFiles(wxCloseEvent& event)
 
 				default:
 					break;
-				}
+				}*/
 				std::string pathToFile = pathToPages.string() + "\\" + pageName;
 				std::ofstream pageFile(pathToFile);
 				
@@ -463,15 +515,19 @@ void MainFrame::LoadPagesFromTextFiles()
 		return;
 	}
 
+	int pageIndex = -1;
 	for (const auto& dirEntry : std::filesystem::recursive_directory_iterator(pathToPages))
 	{
-
 		if (dirEntry.exists())
 		{
 			if (dirEntry.file_size() != 0)
 			{
+				pageIndex++;
+
 				std::filesystem::path pathToFile = dirEntry.path();
 				std::filesystem::path fileNamePath = pathToFile.filename();
+				std::filesystem::path extensionPath = pathToFile.extension();
+				std::string extension = extensionPath.string();
 
 				std::string pageName = fileNamePath.string();
 				
@@ -486,12 +542,16 @@ void MainFrame::LoadPagesFromTextFiles()
 				}
 				wxString wxTextForPage(textForPage);
 
+				
 				// create code page
-				std::string extension;
-				extension = pageName.substr(pageName.length() - 4, pageName.length() - 1);
 				if (extension != ".txt")
 				{
-					pageName = pageName.substr(0, pageName.length() - 9); //remove "_codePage"
+					if (extension == ".cpp") Settings::codePageLang.insert({ pageIndex, CodeLang::CPP});
+					else if (extension == ".py") Settings::codePageLang.insert({ pageIndex, CodeLang::PYTHON });
+					else if (extension == ".java") Settings::codePageLang.insert({ pageIndex, CodeLang::JAVA });
+					else if (extension == ".js") Settings::codePageLang.insert({ pageIndex, CodeLang::JS });
+
+					//pageName = pageName.substr(0, pageName.length() - 4);
 					wxString wxPageName(pageName);
 					CreateCodePage(wxPageName);
 					

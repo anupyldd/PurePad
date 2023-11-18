@@ -23,6 +23,9 @@
 #include "DeletePageDialog.h"
 #include "RenamePageDialog.h"
 #include "CodeOptionsDialog.h"
+#include "ThemeColors.h"
+#include "SyntaxHighlighting.h"
+#include "GlobalSettings.h"
 
 class MainFrame : public wxFrame
 {
@@ -56,6 +59,8 @@ private:
 	void RenamePage(wxCommandEvent& event);
 	void ToggleWordWrap(wxCommandEvent& event);
 	void UpdateCodeOptions(wxCommandEvent& event);
+	void UpdateCurrentCodeLang(wxBookCtrlEvent& event);
+	void UpdateSyntaxHighlight(CodeLang inLang);
 
 	void SavePagesToTextFiles(wxCloseEvent& event);
 	void LoadPagesFromTextFiles();
