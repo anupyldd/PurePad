@@ -14,3 +14,4 @@ Planned updates before v1.0 release:
 - Rich text support for plain text pages
 - Dark color theme
 - App icon
+- Bug fixes
