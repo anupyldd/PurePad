@@ -1,6 +1,7 @@
 #include "MainFrame.h"
 #include "ThemeColors.h"
 #include "SyntaxHighlighting.h"
+#include "GlobalSettings.h"
 
 #include <filesystem>
 #include <iostream>
@@ -273,6 +274,8 @@ void MainFrame::CreateCodePage(wxString& inPageName)
 	newCodePage->Layout();
 
 	genNotebook->AddPage(newCodePage, inPageName, true);
+
+	Settings::codePageLang.insert({ genNotebook->GetSelection(), CodeLang::CPP });
 }
 
 void MainFrame::DeletePage(wxCommandEvent& event)
@@ -344,12 +347,6 @@ void MainFrame::RenamePage(wxCommandEvent& event)
 
 void MainFrame::ToggleWordWrap(wxCommandEvent& event)
 {
-	if (genNotebook->GetSelection() == wxNOT_FOUND)
-	{
-		return;
-	}
-
-
 }
 
 void MainFrame::UpdateCodeOptions(wxCommandEvent& event)
@@ -416,7 +413,28 @@ void MainFrame::SavePagesToTextFiles(wxCloseEvent& event)
 			{ 
 				std::string textValue = codePageTextCtrl->GetValue().ToStdString();
 				std::string pageName = genNotebook->GetPageText(i).ToStdString();
-				pageName += "_codePage.txt";
+				//pageName += "_codePage.txt";
+				switch (Settings::codePageLang[i])
+				{
+				case CPP:
+					pageName += ".cpp";
+					break;
+
+				case PYTHON:
+					pageName += ".py";
+					break;
+
+				case JAVA:
+					pageName += ".java";
+					break;
+
+				case JS:
+					pageName += ".js";
+					break;
+
+				default:
+					break;
+				}
 				std::string pathToFile = pathToPages.string() + "\\" + pageName;
 				std::ofstream pageFile(pathToFile);
 				
@@ -456,7 +474,7 @@ void MainFrame::LoadPagesFromTextFiles()
 				std::filesystem::path fileNamePath = pathToFile.filename();
 
 				std::string pageName = fileNamePath.string();
-				pageName = pageName.substr(0, pageName.length() - 4);	// remove file extension
+				
 
 				std::ifstream fileText(pathToFile);
 				std::string textFromFile;
@@ -469,7 +487,9 @@ void MainFrame::LoadPagesFromTextFiles()
 				wxString wxTextForPage(textForPage);
 
 				// create code page
-				if (pageName.find("_codePage") != pageName.npos) 
+				std::string extension;
+				extension = pageName.substr(pageName.length() - 4, pageName.length() - 1);
+				if (extension != ".txt")
 				{
 					pageName = pageName.substr(0, pageName.length() - 9); //remove "_codePage"
 					wxString wxPageName(pageName);
@@ -482,6 +502,7 @@ void MainFrame::LoadPagesFromTextFiles()
 				}
 				else
 				{
+					pageName = pageName.substr(0, pageName.length() - 4);	// remove file extension
 					wxString wxPageName(pageName);
 					CreatePage(wxPageName);
 
