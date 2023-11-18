@@ -160,17 +160,8 @@ void MainFrame::BindEvents()
 
 void MainFrame::AddPage(wxCommandEvent& event)
 {
-
-	wxPanel* newPage = new wxPanel(genNotebook);
-	wxBoxSizer* pageTextSizer = new wxBoxSizer(wxVERTICAL);
-	wxTextCtrl* pageTextCtrl = new wxTextCtrl(newPage, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
-	wxFont font = wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Courier New"));
-	pageTextCtrl->SetFont(font);
-	pageTextSizer->Add(pageTextCtrl, 1, wxEXPAND, 5);
-	newPage->SetSizer(pageTextSizer);
-	newPage->Layout();
-
-	genNotebook->AddPage(newPage, wxString("new"), true);
+	wxString pageName("new");
+	CreatePage(pageName);
 }
 
 void MainFrame::CreatePage(wxString& inPageName)
@@ -189,93 +180,8 @@ void MainFrame::CreatePage(wxString& inPageName)
 
 void MainFrame::AddCodePage(wxCommandEvent& event)
 {
-	wxPanel* newCodePage = new wxPanel(genNotebook);
-	wxBoxSizer* codePageTextSizer = new wxBoxSizer(wxVERTICAL);
-	
-	wxStyledTextCtrl* codeStyledText = new wxStyledTextCtrl(newCodePage, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE, wxEmptyString);
-	
-	{
-		wxFont font = wxFont(wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Courier New"));
-		codeStyledText->StyleSetFont(wxSTC_STYLE_DEFAULT, font);
-	}
-
-	codeStyledText->StyleClearAll();
-	codeStyledText->SetLexer(wxSTC_LEX_CPP);
-
-	codeStyledText->SetMarginWidth(0, codeStyledText->TextWidth(wxSTC_STYLE_LINENUMBER, wxT("_99999")));
-	codeStyledText->StyleSetForeground(wxSTC_STYLE_LINENUMBER, wxColour(75, 75, 75));
-	codeStyledText->StyleSetBackground(wxSTC_STYLE_LINENUMBER, wxColour(220, 220, 220));
-	codeStyledText->SetMarginType(0, wxSTC_MARGIN_NUMBER);
-
-
-	codeStyledText->SetMarginType(wxSTC_MARGIN_NUMBER, wxSTC_MARGIN_SYMBOL);
-	codeStyledText->SetMarginWidth(wxSTC_MARGIN_NUMBER, 15);
-	codeStyledText->SetMarginMask(wxSTC_MARGIN_NUMBER, wxSTC_MASK_FOLDERS);
-	codeStyledText->StyleSetBackground(wxSTC_MARGIN_NUMBER, wxColor(200, 200, 200));
-	codeStyledText->SetMarginSensitive(wxSTC_MARGIN_NUMBER, true);
-
-	codeStyledText->SetProperty(wxT("fold"), wxT("1"));
-	codeStyledText->SetProperty(wxT("fold.comment"), wxT("1"));
-	codeStyledText->SetProperty(wxT("fold.compact"), wxT("1"));
-
-	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDER, wxSTC_MARK_ARROW);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDER, Colors::lightGray);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDER, Colors::lightGray);
-
-	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDEROPEN, wxSTC_MARK_ARROWDOWN);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEROPEN, Colors::lightGray);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDEROPEN, Colors::lightGray);
-
-	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDERSUB, wxSTC_MARK_EMPTY);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERSUB, Colors::lightGray);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERSUB, Colors::lightGray);
-
-	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDEREND, wxSTC_MARK_ARROW);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEREND, Colors::lightGray);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDEREND, _T("WHITE"));
-
-	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_ARROWDOWN);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDEROPENMID, Colors::lightGray);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDEROPENMID, _T("WHITE"));
-
-	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERMIDTAIL, Colors::lightGray);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERMIDTAIL, Colors::lightGray);
-
-	codeStyledText->MarkerDefine(wxSTC_MARKNUM_FOLDERTAIL, wxSTC_MARK_EMPTY);
-	codeStyledText->MarkerSetForeground(wxSTC_MARKNUM_FOLDERTAIL, Colors::lightGray);
-	codeStyledText->MarkerSetBackground(wxSTC_MARKNUM_FOLDERTAIL, Colors::lightGray);
-	
-
-	//codeStyledText->SetWrapMode(wxSTC_WRAP_WORD); 
-	codeStyledText->SetWrapMode(wxSTC_WRAP_NONE);
-
-
-	codeStyledText->StyleSetForeground(wxSTC_C_STRING, Colors::string);
-	codeStyledText->StyleSetForeground(wxSTC_C_PREPROCESSOR, Colors::preprocessor);
-	codeStyledText->StyleSetForeground(wxSTC_C_IDENTIFIER, Colors::identifier);
-	codeStyledText->StyleSetForeground(wxSTC_C_NUMBER, Colors::number);
-	codeStyledText->StyleSetForeground(wxSTC_C_CHARACTER, Colors::character);
-	codeStyledText->StyleSetForeground(wxSTC_C_WORD, Colors::word);
-	codeStyledText->StyleSetForeground(wxSTC_C_WORD2, Colors::word2);
-	codeStyledText->StyleSetForeground(wxSTC_C_COMMENT, Colors::comment);
-	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTLINE, Colors::commentLine);
-	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOC, Colors::commentDoc);
-	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOCKEYWORD, Colors::commentDocKeyword);
-	codeStyledText->StyleSetForeground(wxSTC_C_COMMENTDOCKEYWORDERROR, Colors::commentDocKeywordError);
-	codeStyledText->StyleSetBold(wxSTC_C_WORD, true);
-	codeStyledText->StyleSetBold(wxSTC_C_WORD2, true);
-	codeStyledText->StyleSetBold(wxSTC_C_COMMENTDOCKEYWORD, true);
-
-	codeStyledText->SetKeyWords(0, Keywords::cpp);
-	codeStyledText->SetKeyWords(1, Keywords::cpp2);
-
-	codePageTextSizer->Add(codeStyledText, 1, wxEXPAND, 5);
-	
-	newCodePage->SetSizer(codePageTextSizer);
-	newCodePage->Layout();
-
-	genNotebook->AddPage(newCodePage, wxString("new"), true);
+	wxString pageName("new");
+	CreateCodePage(pageName);
 }
 
 void MainFrame::CreateCodePage(wxString& inPageName)
