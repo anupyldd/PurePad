@@ -8,11 +8,3 @@ The pages can store either plain text, or code using a simple code editor with s
 Notes are saved in text files on close, so that it is possible to restore them on launch or access individual notes directly from the Pages folder.
 
 The app is created using wxWidgets. 
-
-Planned updates before v1.0 release:
-- More programming language options for code pages
-- Rich text support for plain text pages
-- Dark color theme
-- Localization to other languages
-- App icon
-- Bug fixes
