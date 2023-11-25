@@ -159,7 +159,9 @@ void MainFrame::BindEvents()
 
 void MainFrame::AddPage(wxCommandEvent& event)
 {
-	wxString pageName("new");
+	int pageNum = genNotebook->GetPageCount();
+	std::string page = "new" + std::to_string(pageNum + 1);
+	wxString pageName(page);
 	CreatePage(pageName);
 }
 
@@ -179,7 +181,9 @@ void MainFrame::CreatePage(wxString& inPageName)
 
 void MainFrame::AddCodePage(wxCommandEvent& event)
 {
-	wxString pageName("new.cpp");
+	int pageNum = genNotebook->GetPageCount();
+	std::string page = "new" + std::to_string(pageNum + 1) + ".cpp";
+	wxString pageName(page);
 	CreateCodePage(pageName);
 }
 
