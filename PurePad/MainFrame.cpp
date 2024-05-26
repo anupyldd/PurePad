@@ -61,26 +61,6 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 
 	buttonsSizer->Add(delBtn, 0, wxLEFT, this->FromDIP(5));
 
-	/*
-	wrapBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE);
-
-	wrapBtn->SetBitmap(wxBitmap(pathToIcons + "wrapBtn.png", wxBITMAP_TYPE_ANY));
-	wrapBtn->SetBitmapPressed(wxBitmap(pathToIcons + "wrapBtnPressed.png", wxBITMAP_TYPE_ANY));
-	wrapBtn->SetToolTip(wxT("Word wrap"));
-	wrapBtn->SetBackgroundColour(Colors::darkGray);
-
-	buttonsSizer->Add(wrapBtn, 0, wxLEFT, 5);
-
-	
-	onTopBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE);
-
-	onTopBtn->SetBitmap(wxBitmap(pathToIcons + "onTopBtn.png", wxBITMAP_TYPE_ANY));
-	onTopBtn->SetBitmapPressed(wxBitmap(pathToIcons + "onTopBtnPressed.png", wxBITMAP_TYPE_ANY));
-	onTopBtn->SetToolTip(wxT("Always on top"));
-	onTopBtn->SetBackgroundColour(Colors::darkGray);
-
-	buttonsSizer->Add(onTopBtn, 0, wxLEFT, 5);
-	*/
 
 	editNameBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE);
 
@@ -96,20 +76,6 @@ MainFrame::MainFrame(const wxString& title, const wxSize& size,	long style)
 	tabFillerLabel->Wrap(-1);
 	buttonsSizer->Add(tabFillerLabel, 12, 0, 5);
 
-	/*
-	fontSizeTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(32, 16), 0);
-#ifdef __WXGTK__
-	if (!fontSizeTextCtrl->HasFlag(wxTE_MULTILINE))
-	{
-		fontSizeTextCtrl->SetMaxLength(3);
-	}
-#else
-	fontSizeTextCtrl->SetMaxLength(3);
-#endif
-	fontSizeTextCtrl->SetToolTip(wxT("Font size"));
-
-	buttonsSizer->Add(fontSizeTextCtrl, 0, wxALIGN_CENTER | wxRIGHT, 5);
-	*/
 
 	optionsBtn = new wxBitmapButton(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | wxBORDER_NONE | wxBORDER_NONE);
 
@@ -468,29 +434,6 @@ void MainFrame::SavePagesToTextFiles(wxCloseEvent& event)
 			{ 
 				std::string textValue = codePageTextCtrl->GetValue().ToStdString();
 				std::string pageName = genNotebook->GetPageText(i).ToStdString();
-				//pageName += "_codePage.txt";
-				/*
-				switch (Settings::codePageLang[i])
-				{
-				case CPP:
-					pageName += ".cpp";
-					break;
-
-				case PYTHON:
-					pageName += ".py";
-					break;
-
-				case JAVA:
-					pageName += ".java";
-					break;
-
-				case JS:
-					pageName += ".js";
-					break;
-
-				default:
-					break;
-				}*/
 				std::string pathToFile = pathToPages.string() + "\\" + pageName;
 				std::ofstream pageFile(pathToFile);
 				
